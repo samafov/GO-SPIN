@@ -1,5 +1,5 @@
 // ЗАМЕНИ на адрес своего backend (тот же, что слушает backend/app.py)
-const API_BASE = "https://YOUR-BACKEND-DOMAIN.example.com";
+const API_BASE = "const API_BASE = "https://go-spin-cd9v.onrender.com";";
 
 const tg = window.Telegram?.WebApp;
 tg?.ready();
