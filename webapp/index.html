@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Коллекция подарков</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">◈</span>
+        <span class="brand-name">Альманах</span>
+      </div>
+      <div class="balance-pill" id="balancePill">
+        <span class="star-icon">✦</span>
+        <span id="starBalance">—</span>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="shop">Витрина</button>
+      <button class="tab" data-tab="wheel">Тираж</button>
+      <button class="tab" data-tab="inventory">Коллекция</button>
+    </nav>
+
+    <main>
+      <!-- ВИТРИНА: фиксированные цены, без рандома -->
+      <section class="panel active" id="panel-shop">
+        <p class="panel-note">Каждый экспонат — фиксированная цена. Никаких ставок.</p>
+        <div class="card-grid" id="shopGrid">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      </section>
+
+      <!-- ТИРАЖ: бесплатный спин раз в 24ч, без денег -->
+      <section class="panel" id="panel-wheel">
+        <p class="panel-note">Один бесплатный тираж в сутки. Деньги здесь не участвуют.</p>
+
+        <div class="reel-wrap">
+          <div class="reel-pointer">▾</div>
+          <div class="reel-track" id="reelTrack">
+            <!-- заполняется через JS -->
+          </div>
+        </div>
+
+        <button class="spin-btn" id="spinBtn" disabled>Загрузка…</button>
+        <p class="cooldown-text" id="cooldownText"></p>
+      </section>
+
+      <!-- КОЛЛЕКЦИЯ: что уже получено -->
+      <section class="panel" id="panel-inventory">
+        <p class="panel-note">Всё, что ты собрал покупками и тиражами.</p>
+        <div class="inventory-list" id="inventoryList">
+          <p class="empty-state">Пока пусто — загляни в витрину или крути тираж.</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

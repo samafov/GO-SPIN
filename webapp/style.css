@@ -1,0 +1,298 @@
+/* ============================================================
+   Токены: тёмный плам/индиго фон, латунное золото — валюта,
+   пыльная роза — акцент действия, кремовый текст.
+   Fraunces (serif, тёплый) — заголовки предметов, как в старом
+   каталоге редкостей; Inter — служебный интерфейс.
+   ============================================================ */
+:root {
+  --bg-0: #16121e;
+  --bg-1: #1e1830;
+  --bg-2: #271f3d;
+  --line: #392f52;
+  --cream: #f1ebe0;
+  --cream-dim: #cdc4d6;
+  --gold: #d9ad61;
+  --gold-soft: #7a6538;
+  --rose: #c97b84;
+  --rose-deep: #9c5560;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top, var(--bg-1), var(--bg-0) 65%);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 24px;
+}
+
+/* ---------- Header ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 10px;
+}
+
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand-mark { color: var(--gold); font-size: 20px; }
+.brand-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: 0.01em;
+}
+
+.balance-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.star-icon { color: var(--gold); }
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  margin: 4px 20px 18px;
+  background: var(--bg-2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+}
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  color: var(--cream-dim);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13.5px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.tab.active {
+  background: linear-gradient(180deg, #3a2f57, #2c2444);
+  color: var(--cream);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+/* ---------- Panels ---------- */
+main { padding: 0 20px; }
+.panel { display: none; }
+.panel.active { display: block; animation: fade-in 0.25s ease; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.panel-note {
+  color: var(--cream-dim);
+  font-size: 13px;
+  margin: 0 0 16px;
+}
+
+/* ---------- Shop: trading-card grid (signature element) ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.item-card {
+  position: relative;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 16px 14px 14px;
+  text-align: center;
+  overflow: hidden;
+}
+/* зубчатый край снизу карточки — как у марки/талона коллекционера */
+.item-card::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 8px;
+  background-image: radial-gradient(circle, var(--bg-0) 3px, transparent 3.5px);
+  background-size: 12px 12px;
+  background-position: 0 4px;
+}
+
+.item-emoji {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 10px rgba(217,173,97,0.15));
+}
+
+.item-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.item-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 13.5px;
+  margin-bottom: 12px;
+}
+
+.buy-btn {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, var(--rose), var(--rose-deep));
+  color: #fff;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+}
+.buy-btn:active { transform: scale(0.97); filter: brightness(0.95); }
+
+.skeleton-card {
+  height: 168px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(100deg, var(--bg-2) 30%, var(--bg-1) 50%, var(--bg-2) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+/* ---------- Wheel: vertical "reel" ticket, not a circular wheel ---------- */
+.reel-wrap {
+  position: relative;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 10px 0;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.reel-pointer {
+  position: absolute;
+  top: -2px; left: 50%;
+  transform: translateX(-50%);
+  color: var(--gold);
+  font-size: 20px;
+  z-index: 2;
+}
+.reel-track {
+  display: flex;
+  gap: 10px;
+  padding: 22px 14px 10px;
+  transition: transform 3.5s cubic-bezier(0.12, 0.85, 0.15, 1);
+}
+.reel-item {
+  flex: 0 0 auto;
+  width: 84px;
+  height: 96px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.reel-item .emoji { font-size: 30px; }
+.reel-item .name { font-size: 10px; color: var(--cream-dim); text-align: center; padding: 0 4px; }
+.reel-item.winner { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(217,173,97,0.25); }
+
+.spin-btn {
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, #e6c483, var(--gold-soft));
+  color: #221a0e;
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.2s;
+}
+.spin-btn:disabled {
+  background: var(--bg-2);
+  color: var(--cream-dim);
+  cursor: not-allowed;
+}
+.spin-btn:not(:disabled):active { transform: scale(0.98); }
+
+.cooldown-text {
+  text-align: center;
+  color: var(--cream-dim);
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+/* ---------- Inventory ---------- */
+.inventory-list { display: flex; flex-direction: column; gap: 10px; }
+.inventory-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+.inventory-row .emoji { font-size: 24px; }
+.inventory-row .meta { flex: 1; }
+.inventory-row .title { font-family: 'Fraunces', serif; font-size: 14px; }
+.inventory-row .source { font-size: 11.5px; color: var(--cream-dim); }
+
+.empty-state {
+  text-align: center;
+  color: var(--cream-dim);
+  font-size: 13.5px;
+  padding: 40px 0;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  background: var(--bg-2);
+  border: 1px solid var(--gold);
+  color: var(--cream);
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s, opacity 0.25s;
+  max-width: 90%;
+  text-align: center;
+}
+.toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
